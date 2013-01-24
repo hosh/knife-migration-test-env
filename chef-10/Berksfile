@@ -1,0 +1,5 @@
+site :opscode
+
+cookbook 'apt'
+cookbook 'chef-server', "=1.1.0"
+

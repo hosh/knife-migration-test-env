@@ -1,0 +1,34 @@
+require 'berkshelf/vagrant'
+
+Vagrant::Config.run do |config|
+  # config.berkshelf.berksfile_path = "./Berksfile"
+  # config.berkshelf.only = []
+  # config.berkshelf.except = []
+
+  config.vm.host_name = "chef-10"
+
+  config.vm.box = "opscode-ubuntu-12.04"
+  config.vm.box_url = "https://opscode-vm.s3.amazonaws.com/vagrant/boxes/opscode-ubuntu-12.04.box"
+  config.vm.network :hostonly, "33.33.33.210"
+
+  config.vm.provision :chef_solo do |chef|
+    chef.json = {
+      'chef-server' =>
+      {
+        url: "http://chef-10.piab:4000",
+        webui_enabled: true,
+      }
+    }
+
+    chef.run_list = [ "apt", "chef-server::rubygems-install" ]
+  end
+
+
+  # Share an additional folder to the guest VM. The first argument is
+  # an identifier, the second is the path on the guest to mount the
+  # folder, and the third is the path on the host to the actual folder.
+  # config.vm.share_folder "v-data", "/vagrant_data", "../data"
+
+  config.ssh.max_tries = 40
+  config.ssh.timeout   = 120
+end
