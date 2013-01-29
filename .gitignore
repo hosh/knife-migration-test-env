@@ -8,3 +8,4 @@ Gemfile.lock
 .*.sw[a-z]
 *.un~
 .build_cache
+data/
