@@ -18,10 +18,13 @@ Vagrant::Config.run do |config|
       {
         package_file: '/tmp/build_cache/chef-server_11.0.0-alpha.3+20130116014017.git.28.89d6514-1.ubuntu.10.04_amd64.deb'
         #package_file: 'https://opscode-omnitruck-release.s3.amazonaws.com/ubuntu/10.04/x86_64/chef-server_11.0.0-alpha.3+20130124075141.git.37.d143b92-1.ubuntu.10.04_amd64.deb'
+      },
+      setup: {
+        chef_server_version: 'chef-11'
       }
     }
 
-    chef.run_list = [ "chef-server" ]
+    chef.run_list = [ "chef-server", "setup::knife" ]
   end
 
   # Share an additional folder to the guest VM. The first argument is

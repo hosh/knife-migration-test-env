@@ -10,3 +10,4 @@ Gemfile.lock
 .build_cache
 data/
 chef-10/config
+chef-11/config
