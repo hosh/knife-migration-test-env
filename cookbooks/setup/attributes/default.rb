@@ -26,6 +26,8 @@ when 'chef-11'
   default[:setup][:initial_admin_key] = "#{node[:setup][:knife_dir]}/admin.pem"
   default[:setup][:validator_name] = 'chef-validator'
   default[:setup][:validator_key] = 'chef-validator.pem'
+
+  default[:setup][:chef_server_url] = 'https://33.33.33.211'
 else
   fail "Define setup/chef_server_version"
 end
