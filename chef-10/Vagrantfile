@@ -17,10 +17,14 @@ Vagrant::Config.run do |config|
       {
         url: "http://chef-10.piab:4000",
         webui_enabled: true,
+      },
+      setup: {
+        chef_server_version: 'chef-10'
       }
+
     }
 
-    chef.run_list = [ "apt", "chef-server::rubygems-install" ]
+    chef.run_list = [ "apt", "chef-server::rubygems-install", "setup::knife" ]
   end
 
 
