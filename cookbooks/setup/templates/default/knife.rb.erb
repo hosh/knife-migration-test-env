@@ -1,0 +1,17 @@
+# This file provided as an example. Run 'knife configure' to generate a
+# config file for your local user.
+config_dir = File.dirname(__FILE__)
+cookbook_dir = File.join(config_dir, "..", ".." ,"cookbooks")
+
+log_level        :info
+log_location     STDOUT
+node_name        '<%= @name %>'
+client_key       "#{config_dir}/<%= @key_file %>"
+chef_server_url  "<%= @chef_server_url %>"
+cache_type       'BasicFile'
+cache_options( :path => "#{config_dir}/checksums" )
+cookbook_path [ cookbook_dir ]
+
+validation_client_name "<%= @validator_name %>"
+validation_key "#{config_dir}/<%= @validator_key_file %>"
+
