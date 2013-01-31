@@ -1,9 +1,13 @@
 require 'vm'
 
 namespace :vm do
+  desc "Rebuilds all VMs"
+  task :rebuild => [ 'vm:chef_10:rebuild', 'vm:chef_11:rebuild' ]
+
   namespace :chef_10 do
     desc "Brings up the Chef 10 server"
     task :up do
+      puts "\n\nStarting up Chef 10\n\n"
       Chef(10).vagrant! "up"
     end
 
@@ -22,6 +26,7 @@ namespace :vm do
   namespace :chef_11 do
     desc "Brings up the Chef 11 server"
     task :up do
+      puts "\n\nStarting up Chef 11\n\n"
       Chef(11).vagrant! "up"
     end
 
