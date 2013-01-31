@@ -7,6 +7,7 @@ gem 'forgery'
 gem 'rake'
 gem 'rlet'
 gem 'mixlib-shellout'
+gem 'mixlib-config'
 
 gem 'yajl-ruby'
 gem 'multi_json'

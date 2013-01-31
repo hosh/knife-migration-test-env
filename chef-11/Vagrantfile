@@ -1,3 +1,6 @@
+$LOAD_PATH.unshift('../lib')
+require 'config'
+
 require 'berkshelf/vagrant'
 
 Vagrant::Config.run do |config|
@@ -8,9 +11,9 @@ Vagrant::Config.run do |config|
 
   config.vm.host_name = "chef-11"
 
-  config.vm.box = "opscode-ubuntu-12.04"
-  config.vm.box_url = "https://opscode-vm.s3.amazonaws.com/vagrant/boxes/opscode-ubuntu-12.04.box"
-  config.vm.network :hostonly, "33.33.33.211"
+  config.vm.box     = Environment::Config[:base_box]
+  config.vm.box_url = Environment::Config[:base_box_url]
+  config.vm.network :hostonly, Environment::Config[:chef_11_ip_addr]
 
   config.vm.provision :chef_solo do |chef|
     chef.json = {
