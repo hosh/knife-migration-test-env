@@ -1,0 +1,3 @@
+[submodule "vendor/gems/knife-essentials"]
+	path = vendor/gems/knife-essentials
+	url = git://github.com/hosh/knife-essentials.git

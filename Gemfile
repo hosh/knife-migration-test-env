@@ -15,4 +15,4 @@ gem 'multi_json'
 # Does not work with Berkshelf :-/
 #gem 'chef', git: 'git://github.com/opscode/chef.git'
 
-gem 'knife-essentials'
+gem 'knife-essentials', path: 'vendor/gems/knife-essentials'
