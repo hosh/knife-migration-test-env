@@ -28,6 +28,12 @@ module Environment
     end
   end
 
+  class Base < VM
+    def self.base_path
+      root_path
+    end
+  end
+
   class Chef10 < VM
     def self.base_path
       root_path / "chef-10"
@@ -40,6 +46,8 @@ module Environment
     end
   end
 end
+
+Run = Environment::Base
 
 def Chef(version)
   case version
