@@ -54,5 +54,17 @@ namespace :vm do
     task :rebuild => [ :destroy, :up ] do
       puts "[chef-11] Done."
     end
+
+    desc "Uploads Chef 10 repo to the Chef 11 server"
+    task :upload do
+      puts "\n[chef-11] Uploading Chef 10 repo to Chef 11 server"
+      Chef(11).bundle_exec! "knife upload / --chef-repo-path ../run/chef-10 -c config/knife.rb --repo-mode full"
+    end
+
+    desc "Downloads test repo to the Chef 11 server"
+    task download: [ 'run:chef_11:setup' ] do
+      puts "\n[chef-11] Downloading test data to server"
+      Chef(11).bundle_exec! "knife download / --chef-repo-path ../run/chef-11 -c config/knife.rb --repo-mode full"
+    end
   end
 end

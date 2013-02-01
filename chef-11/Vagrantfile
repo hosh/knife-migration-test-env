@@ -19,8 +19,13 @@ Vagrant::Config.run do |config|
     chef.json = {
       'chef-server' =>
       {
-        package_file: '/tmp/build_cache/chef-server_11.0.0-alpha.3+20130116014017.git.28.89d6514-1.ubuntu.10.04_amd64.deb'
+        # Chef 11 uses api_fqdn to craft URL responses in some endpoints
+        api_fqdn: Environment::Config[:chef_11_ip_addr],
+        package_file: '/tmp/build_cache/chef-server_11.0.0-alpha.3+20130116014017.git.28.89d6514-1.ubuntu.10.04_amd64.deb',
         #package_file: 'https://opscode-omnitruck-release.s3.amazonaws.com/ubuntu/10.04/x86_64/chef-server_11.0.0-alpha.3+20130124075141.git.37.d143b92-1.ubuntu.10.04_amd64.deb'
+
+        # Set bookshelf VIP so that cookbook uploads will work
+        configuration: { bookshelf: { vip: Environment::Config[:chef_11_ip_addr] } }
       },
       setup: {
         chef_server_version: 'chef-11'
