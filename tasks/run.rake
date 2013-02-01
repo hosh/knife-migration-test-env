@@ -45,3 +45,15 @@ namespace :run do
     task complete_run: [ 'vm:chef_11:rebuild', :clean_run ]
   end
 end
+
+desc "Wipes the test data"
+task wipe: [ 'run:chef_10:wipe', 'run:chef_11:wipe', 'run:chef_10:setup', 'run:chef_11:setup' ]
+
+desc "Runs the test data without wiping"
+task run: [ 'run:chef_10:run', 'run:chef_11:run' ]
+
+desc "Runs the test data"
+task clean_run: [ :wipe, :run ]
+
+desc "Rebuild the VMs and runs the tests from scratch"
+task complete_run: [ 'vm:chef_10:rebuild', 'vm:chef_11:rebuild', :clean_run ]

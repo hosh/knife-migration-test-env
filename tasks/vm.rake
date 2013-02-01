@@ -31,7 +31,7 @@ namespace :vm do
 
     desc "Downloads test repo to the Chef 10 server"
     task download: [ 'run:chef_10:setup' ] do
-      puts "\n[chef-10] Downloading test data to server"
+      puts "\n[chef-10] Downloading Chef 10 repo"
       Chef(10).bundle_exec! "knife download / --chef-repo-path ../run/chef-10 -c config/knife.rb --repo-mode full"
     end
   end
@@ -63,7 +63,7 @@ namespace :vm do
 
     desc "Downloads test repo to the Chef 11 server"
     task download: [ 'run:chef_11:setup' ] do
-      puts "\n[chef-11] Downloading test data to server"
+      puts "\n[chef-11] Downloading Chef 11 repo"
       Chef(11).bundle_exec! "knife download / --chef-repo-path ../run/chef-11 -c config/knife.rb --repo-mode full"
     end
   end
