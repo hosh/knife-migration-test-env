@@ -1,6 +1,9 @@
 require 'core_ext/string'
+require 'core_ext/hash'
 require 'mixlib/shellout'
 require 'active_support/core_ext/object/blank'
+require 'chef_fs/knife'
+require 'chef_fs/command_line'
 
 module Environment
   class VM
@@ -12,8 +15,12 @@ module Environment
       fail "Define self.base_path"
     end
 
+    def self.shell_out(cmd, options = {})
+      Mixlib::ShellOut.new(cmd, {'cwd' => base_path, live_stream: STDOUT}.merge(options)).run_command
+    end
+
     def self.shell_out!(cmd, options = {})
-      Mixlib::ShellOut.new(cmd, {'cwd' => base_path, live_stream: STDOUT}.merge(options)).run_command.tap do |o|
+      shell_out(cmd, options).tap do |o|
         puts "ERROR: #{o.stderr}" unless o.stderr.blank?
         o.error!
       end
@@ -31,6 +38,38 @@ module Environment
   class Base < VM
     def self.base_path
       root_path
+    end
+
+    # Patches into knife-essentials diff algorithim
+    def self.diff(a, b)
+      shell_out "diff -r #{a} #{b}", returns: [0,1], live_stream: nil
+    end
+
+    def self.verify(a, b)
+      _diff = diff(a,b)
+      case _diff.exitstatus
+      when 1
+        puts "[chef-10] ERROR: Data integrity failed"
+        puts _diff.stdout
+        self.log << _diff.stdout
+      when 0
+        puts "[chef-10] Data integrity nominal."
+      else
+        puts "Unexpected status code: #{_diff.status}"
+      end
+    end
+
+    def self.log
+      @_report ||= []
+    end
+
+    def self.report
+      if self.log.empty?
+        puts "\nTest results: Pass."
+      else
+        puts "\nERRORS: Data integrity checks failed:"
+        puts self.log
+      end
     end
   end
 
